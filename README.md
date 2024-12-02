@@ -1,2 +1,2 @@
 # crudtrecos-firebase
- VErsão do CRUDTrecos usando Firebase Authentication.
+ Versão do CRUDTrecos usando Firebase Authentication.
