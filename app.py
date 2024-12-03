@@ -16,6 +16,7 @@ from modules.perfil import mod_perfil
 from modules.start import mod_start
 
 app = Flask(__name__)
+app.secret_key = 'Senha@123_456'
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'

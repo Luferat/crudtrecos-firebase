@@ -48,17 +48,16 @@
 
 </form>
 
-{% if sucesso %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
 
-<dialog id="myDialog">
-    <h4>Legal!</h4>
-    <p>Seu novo treco foi cadastrado!</p>
-    <form method="dialog">
-        <button>OK</button>
-    </form>
+<dialog id="myDialog" class="{{ messages[0][0] }}">
+    {{ messages[0][1] | safe }}
+    <form method="dialog"><button>OK</button></form>
 </dialog>
 <script>myDialog.showModal()</script>
 
 {% endif %}
+{% endwith %}
 
 {% endblock %}

@@ -57,27 +57,17 @@
     <li>Esqueceu a senha? <a href="/novasenha">Clique aqui!</a></li>
 </ul>
 
-{% if jatem != '' %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
 
-<dialog id="myDialog">
-    <h4>Oooops!</h4>
-    <p>{{ jatem }}</p>
+<dialog id="myDialog" class="{{ messages[0][0] }}">
+    {{ messages[0][1] | safe }}
     <form method="dialog"><button>OK</button></form>
 </dialog>
 <script>myDialog.showModal()</script>
 
 {% endif %}
-
-{% if success %}
-
-<dialog id="myDialog">
-    <h4>Oba!</h4>
-    <p>Usuário cadastrado com sucesso! Faça login...</p>
-    <form method="dialog"><button onclick="location.href='/login'">OK</button></form>
-</dialog>
-<script>myDialog.showModal()</script>
-
-{% endif %}
+{% endwith %}
 
 <script>
     toggleSenha.addEventListener('click', (e) => {

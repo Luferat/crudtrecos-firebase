@@ -1,9 +1,8 @@
-from flask import g, redirect, render_template, request, url_for
+from flask import flash, g, redirect, render_template, request, url_for
 
 
 def mod_cadastro(mysql):
     jatem = ''
-    success = False
     if g.usuario != '':
         return redirect(url_for('perfil'))
     if request.method == 'POST':
@@ -15,9 +14,11 @@ def mod_cadastro(mysql):
         cur.close()
         if len(rows) > 0:
             if rows[0]['u_status'] == 'off':
-                jatem = 'Este e-mail já está cadastrado para um usuário inativo. Entre em contato para saber mais.'
+                flash(
+                    'Este e-mail já está cadastrado para um usuário inativo. Entre em contato para saber mais.', 'error')
             else:
-                jatem = 'Este e-mail já está cadastrado. Tente fazer login ou solicitar uma nova senha.'
+                flash(
+                    'Este e-mail já está cadastrado. Tente fazer login ou solicitar uma nova senha.', 'error')
         else:
             sql = "INSERT INTO usuario (u_nome, u_nascimento, u_email, u_senha) VALUES (%s, %s, %s, SHA1(%s))"
             cur = mysql.connection.cursor()
@@ -31,10 +32,9 @@ def mod_cadastro(mysql):
             )
             mysql.connection.commit()
             cur.close()
-            success = True
+            flash(
+                '<h4>Oba!</h4><p>Usuário cadastrado com sucesso! Faça login...</p>', 'success')
     pagina = {
         'titulo': 'CRUDTrecos - Cadastre-se',
-        'jatem': jatem,
-        'success': success,
     }
     return render_template('cadastro.html', **pagina)

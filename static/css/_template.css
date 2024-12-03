@@ -186,7 +186,6 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: .5rem;
 }
 
 #wrap>footer a {
@@ -320,7 +319,7 @@ button {
     width: 90%;
     max-width: 300px;
     margin: auto;
-    background-color: rgb(220, 255, 220);
+    background-color: white;
     font-size: 90%;
 }
 
@@ -330,6 +329,14 @@ button {
 
 #myDialog::backdrop {
     background: rgba(0, 0, 0, 0.5);
+}
+
+dialog.error {
+    background-color: rgb(255, 215, 215) !important;
+}
+
+dialog.success {
+    background-color: rgb(210, 255, 217) !important;
 }
 
 .flutua-icone {

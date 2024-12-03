@@ -1,5 +1,5 @@
 import json
-from flask import g, make_response, redirect, render_template, request, url_for
+from flask import flash, g, make_response, redirect, render_template, request, url_for
 from functions.db_usuario import get_usuario
 from functions.geral import datetime_para_string, remove_prefixo
 
@@ -7,12 +7,11 @@ from functions.geral import datetime_para_string, remove_prefixo
 def mod_login(mysql):
     if g.usuario != '':
         return redirect(url_for('perfil'))
-    erro = False
     if request.method == 'POST':
         form = dict(request.form)
         usuario = get_usuario(mysql=mysql, form=form)
         if usuario == None:
-            erro = True
+            flash('<h4>Oooops!</h4><p>Não encontrei seus dados! Verifique o e-mail e a senha e tente novamente.</p>', 'error')
         else:
             del usuario['u_senha']
             usuario['u_pnome'] = usuario['u_nome'].split()[0]
@@ -27,7 +26,6 @@ def mod_login(mysql):
             )
             return resposta
     pagina = {
-        'titulo': 'CRUDTrecos - Login',
-        'erro': erro
+        'titulo': 'CRUDTrecos - Login'
     }
     return render_template('login.html', **pagina)

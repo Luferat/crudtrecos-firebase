@@ -29,30 +29,16 @@
 
 </div>
 
-{% if acao == 'apagado' %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
 
-<dialog id="myDialog">
-    <h4>Oba!</h4>
-    <p>Seu treco foi apagado com sucesso!</p>
-    <form method="dialog">
-        <button onclick="window.history.pushState({}, '', '/')">OK</button>
-    </form>
+<dialog id="myDialog" class="{{ messages[0][0] }}">
+    {{ messages[0][1] | safe }}
+    <form method="dialog"><button>OK</button></form>
 </dialog>
 <script>myDialog.showModal()</script>
 
 {% endif %}
-
-{% if acao == 'editado' %}
-
-<dialog id="myDialog">
-    <h4>Oba!</h4>
-    <p>Seu treco foi editado com sucesso!</p>
-    <form method="dialog">
-        <button onclick="window.history.pushState({}, '', '/')">OK</button>
-    </form>
-</dialog>
-<script>myDialog.showModal()</script>
-
-{% endif %}
+{% endwith %}
 
 {% endblock %}

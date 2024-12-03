@@ -3,12 +3,11 @@ from flask import g
 
 def get_usuario(mysql, form):
     sql = '''
-    SELECT *,
-        -- Gera uma versão das datas em pt-BR para salvar no cookie
-        DATE_FORMAT(u_data, '%%d/%%m/%%Y às %%H:%%m') AS u_databr,
-        DATE_FORMAT(u_nascimento, '%%d/%%m/%%Y') AS u_nascimentobr
-    FROM usuario
-    WHERE u_email = %s AND u_senha = SHA1(%s) AND u_status = 'on'
+        SELECT *,
+            DATE_FORMAT(u_data, '%%d/%%m/%%Y às %%H:%%m') AS u_databr,
+            DATE_FORMAT(u_nascimento, '%%d/%%m/%%Y') AS u_nascimentobr
+        FROM usuario
+        WHERE u_email = %s AND u_senha = SHA1(%s) AND u_status = 'on';
     '''
     cur = mysql.connection.cursor()
     cur.execute(sql, (form['email'], form['senha'],))

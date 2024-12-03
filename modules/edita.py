@@ -1,4 +1,4 @@
-from flask import abort, g, redirect, render_template, request, url_for
+from flask import abort, flash, g, redirect, render_template, request, url_for
 from functions.db_treco import get_one_treco, update_treco
 
 
@@ -8,7 +8,8 @@ def mod_edita(mysql, id):
     if request.method == 'POST':
         form = dict(request.form)
         update_treco(mysql=mysql, form=form, id=id)
-        return redirect(url_for('index', a='editado'))
+        flash('<h4>Oba!</h4><p>Seu treco foi editado com sucesso!</p>', 'success')
+        return redirect(url_for('index'))
     row = get_one_treco(mysql=mysql, id=id)
     if row == None:
         abort(404)
